@@ -1,0 +1,121 @@
+to setup
+  ;;cro 50 [fd 5]
+  let gr ["g1" "g2"]
+  clear-all
+  let a 0
+  let posx 10
+  let posy 20
+;;  foreach mylist
+  ;;[
+  ;; create-turtles 1 [set label item a  mylist setxy posx posy]
+  ;; set posx posx + 10
+  ;; set a a + 1
+   ;; ]
+  set a 0
+  set posy 50 
+  set posx 10
+  foreach gr
+  [
+;;   create-turtles 1 [set label item a  gr setxy posx posy]
+   set posx posx + 10
+   set a a + 1
+   ]
+  ask turtles [set color red]
+  reset-ticks
+end
+to move-turtles
+  ask turtles [
+    right random 360
+    forward 1
+  ]
+end
+to go
+  let mylist [10 2 8 4 6 1 9]
+  let group ["gr1" "gr2" "gr3" "gr4"]
+  let posx 0
+  let posy 0
+  set posy 50 
+  set posx 10
+  let a 0
+  foreach group
+  [
+   create-turtles 1 [set label item a  group setxy posx posy set shape "circle" set size 5]
+   set posx posx + 10
+   set a a + 1
+   ]
+  ask turtles [set color red]
+
+  let my1 sort mylist
+  let gn length group
+  let sum1 sum my1
+  let aver sum1 / gn
+  let lvalue 0
+;;  show length mylist
+  let rep true
+  let rvalue length my1 
+  set rvalue rvalue - 1
+  set posy 50
+  set posx 10
+  let plind 0
+  let gp 1
+  show "aver:"
+  show aver
+  while [rep]
+  [
+   let one item rvalue my1
+   let two item lvalue my1
+   set two two + one
+   let arg1 one - aver
+   let arg2 two - aver
+   if one - aver <= 0
+   [
+     set arg1 aver - one
+   ]   
+   if two - aver <= 0
+   [
+     set arg2 aver - two
+   ]
+   show arg1
+   show arg2
+   if arg1 >= arg2
+   [ 
+     show "taking right and left" 
+     
+     create-turtles 1 [set label item lvalue my1 setxy posx posy + 10 set shape "person"]
+  ;;   set plind plind + 1
+     if rvalue != lvalue
+     [
+     create-turtles 1 [set label item rvalue my1 setxy posx posy + 20 set shape "person"]
+     ]
+   ;;  set plind plind + 1 
+     set lvalue lvalue + 1
+     set rvalue rvalue - 1
+     
+   if lvalue > rvalue
+   [
+     set rep false
+   ]
+
+   ]
+   if arg1 < arg2
+   [
+     show "taking right"
+    create-turtles 1 [set label item rvalue my1 setxy posx posy + 10 set shape "person"]
+    set rvalue rvalue - 1
+    if rvalue < lvalue
+    [
+      set rep false
+    ]
+   ] 
+   set posx posx + 10
+   
+   show lvalue 
+   show rvalue 
+  ;;  show gp
+
+  ]
+  stop
+  ;;if ticks >= 50 [stop]
+  ;;move-turtles
+  ;;tick
+end
